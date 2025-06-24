@@ -112,8 +112,8 @@ resume-ats-analyzer/
 - [x] Test both PDF and DOCX text extraction
 
 ### Phase 3: Gemini AI Integration & Job Comparison
-- [ ] Create JobDescriptionInput component
-- [ ] Set up Gemini API client
+- [x] Create JobDescriptionInput component
+- [x] Set up Gemini API client
 - [ ] Create AI analysis prompts for resume vs job comparison
 - [ ] Build analysis API endpoint that accepts resume text + job description
 - [ ] Implement response parsing for structured analysis results
