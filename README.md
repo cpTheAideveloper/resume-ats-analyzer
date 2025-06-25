@@ -24,11 +24,13 @@ The application uses **Gemini AI** to provide intelligent, research-backed analy
 - **Contextual Understanding**: Modern AI that goes beyond simple keyword matching
 - **Industry-Specific Insights**: Tailored recommendations for different sectors
 
-### 🎨 Notion-Style UI
-- **Clean, Minimal Design**: Focused on content and usability
-- **Card-Based Layout**: Organized information presentation
-- **Consistent Typography**: Clear hierarchy and readability
-- **Intuitive Navigation**: Seamless flow between analysis types
+### 🎨 Notion-Style UI with Advanced Theme System
+- **TailwindCSS 4.0 Theme System**: CSS-first configuration with semantic color naming
+- **Multi-Theme Support**: Light, dark, ocean, forest, and sunset themes
+- **Semantic Text Colors**: Consistent text hierarchy using content-based naming
+- **Responsive Design**: Mobile-first approach with fluid typography
+- **Card-Based Layout**: Organized information presentation with hover effects
+- **Custom Animations**: Floating particles, gradient effects, and smooth transitions
 
 ### 📁 Robust File Processing
 - **Multi-Format Support**: PDF and DOCX text extraction
@@ -39,409 +41,503 @@ The application uses **Gemini AI** to provide intelligent, research-backed analy
 ## 🏗️ Tech Stack
 
 - **Frontend**: Nuxt 3 + TypeScript
-- **Styling**: TailwindCSS v4 (Notion-inspired design system)
+- **Styling**: TailwindCSS v4 (CSS-first theme configuration)
 - **State Management**: Pinia (for cross-page data persistence)
 - **AI Integration**: Google Gemini API (`@google/genai`)
 - **File Processing**: mammoth (DOCX) + pdf-parse (PDF)
 - **Backend**: Nuxt server API routes
 - **Icons**: Nuxt Icon module
 
+## 🎨 Advanced Theme System - TailwindCSS 4.0
+
+### CSS-First Theme Configuration
+
+Our theme system uses TailwindCSS 4.0's revolutionary CSS-first approach with the `@theme` directive, eliminating JavaScript configuration files and enabling semantic color naming.
+
+#### **Core Theme Structure**
+
+```css
+@theme {
+  /* Semantic Content Colors */
+  --color-content-base: #111827;        /* Primary text color */
+  --color-content-secondary: #6b7280;   /* Secondary text with reduced emphasis */
+  --color-content-tertiary: #9ca3af;    /* Tertiary text with minimal emphasis */
+  --color-content-inverse: #ffffff;     /* Text on dark backgrounds */
+  --color-content-muted: #d1d5db;       /* Placeholder and disabled text */
+  
+  /* Brand & Interactive Colors */
+  --color-primary: #2563eb;             /* Primary brand color */
+  --color-primary-hover: #1d4ed8;       /* Primary hover state */
+  --color-primary-content: #ffffff;     /* Text on primary background */
+  
+  /* Status Colors with Content Variants */
+  --color-success: #059669;
+  --color-success-content: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-content: #ffffff;
+  --color-error: #dc2626;
+  --color-error-content: #ffffff;
+  
+  /* Surface Colors */
+  --color-surface: #ffffff;             /* Main background */
+  --color-surface-secondary: #f9fafb;   /* Secondary backgrounds */
+  --color-surface-tertiary: #f3f4f6;    /* Cards and containers */
+  
+  /* Border Colors */
+  --color-border: #e5e7eb;              /* Default borders */
+  --color-border-secondary: #f3f4f6;    /* Subtle borders */
+  --color-border-accent: #d1d5db;       /* Emphasized borders */
+}
+```
+
+#### **Semantic Text Usage Patterns**
+
+Instead of using direct color classes, we use semantic text utilities:
+
+```html
+<!-- ❌ Old approach with direct colors -->
+<h1 class="text-gray-900">Title</h1>
+<p class="text-gray-600">Description</p>
+<span class="text-gray-400">Metadata</span>
+
+<!-- ✅ New approach with semantic content colors -->
+<h1 class="text-content-base">Title</h1>
+<p class="text-content-secondary">Description</p>
+<span class="text-content-tertiary">Metadata</span>
+
+<!-- ✅ Using opacity for reduced visibility -->
+<p class="text-content-base/70">Subtle primary text</p>
+<span class="text-content-secondary/50">Very subtle secondary text</span>
+```
+
+#### **Multi-Theme Support**
+
+Themes automatically update all semantic colors:
+
+```css
+/* Dark Theme */
+[data-theme="dark"] {
+  --color-content-base: #f8fafc;        /* Light text on dark background */
+  --color-content-secondary: #cbd5e1;   /* Adjusted secondary text */
+  --color-content-tertiary: #94a3b8;    /* Adjusted tertiary text */
+  --color-surface: #0f172a;             /* Dark background */
+  --color-surface-secondary: #1e293b;   /* Dark secondary surfaces */
+}
+
+/* Ocean Theme */
+[data-theme="ocean"] {
+  --color-primary: #0891b2;             /* Cyan primary */
+  --color-content-base: #0f172a;        /* Deep blue-gray text */
+}
+```
+
+#### **Custom Utilities for Consistent Design**
+
+```css
+@utility text-hero {
+  font-size: clamp(2.25rem, 5vw, 6rem);    /* Responsive hero text */
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--color-content-base);
+}
+
+@utility text-subtitle {
+  font-size: clamp(1.125rem, 3vw, 1.875rem); /* Responsive subtitle */
+  line-height: 1.625;
+  font-weight: 400;
+  color: var(--color-content-secondary);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-content);
+  /* Automatically adapts to theme changes */
+}
+```
+
+### Theme Usage Guidelines
+
+#### **Text Hierarchy**
+- `text-content-base` - Primary headings, important content
+- `text-content-secondary` - Body text, descriptions
+- `text-content-tertiary` - Captions, metadata, labels
+- `text-content-muted` - Placeholder text, disabled content
+- `text-content-inverse` - Text on dark/colored backgrounds
+
+#### **Opacity Modifiers for Subtle Text**
+- `text-content-base/90` - Slightly reduced primary text
+- `text-content-base/70` - Noticeably reduced primary text
+- `text-content-secondary/70` - Subtle secondary text
+- `text-content-secondary/50` - Very subtle secondary text
+
+#### **Surface and Border Consistency**
+- `bg-surface` - Main background color
+- `bg-surface-secondary` - Card backgrounds, sidebars
+- `bg-surface-tertiary` - Input fields, code blocks
+- `border-border` - Default border color
+- `border-border-secondary` - Subtle borders
+- `border-border-accent` - Emphasized borders
+
 ## 📂 Project Structure
 
 ```
 resume-ats-analyzer/
+├── assets/css/
+│   └── main.css                    ✅ TailwindCSS 4.0 theme configuration
 ├── components/
-│   ├── ui/                           # Core UI components
-│   │   ├── Button.vue               ✅ Enhanced with variants
-│   │   ├── FileUpload.vue           ✅ Drag & drop with validation
-│   │   ├── Card.vue                 🆕 Notion-style cards
-│   │   ├── Badge.vue                🆕 Status indicators
-│   │   ├── IconButton.vue           🆕 Icon-only buttons
-│   │   ├── LoadingSpinner.vue       🆕 Loading states
-│   │   └── ProgressBar.vue          🆕 Progress indicators
-│   ├── layout/                      # Layout components
-│   │   ├── Header.vue               🆕 Navigation header
-│   │   ├── Hero.vue                 🆕 Home page hero section
-│   │   └── Footer.vue               🆕 Simple footer
-│   ├── resume/                      # Resume-related components
-│   │   ├── ResumeUploader.vue       ✅ Enhanced uploader with animations
-│   │   ├── ResumePreview.vue        ✅ File info display
-│   │   └── ResumeStatus.vue         🆕 Upload status
-│   ├── analysis/                    # Analysis result components
-│   │   ├── ATSResults.vue           🆕 ATS-only results
+│   ├── ui/                         # Core UI components
+│   │   ├── Button.vue             ✅ Enhanced with semantic theme colors
+│   │   ├── FileUpload.vue         ✅ Drag & drop with theme consistency
+│   │   ├── Card.vue               🆕 Notion-style cards with theme support
+│   │   ├── Badge.vue              🆕 Status indicators with semantic colors
+│   │   ├── IconButton.vue         🆕 Icon-only buttons
+│   │   ├── LoadingSpinner.vue     🆕 Loading states
+│   │   └── ProgressBar.vue        🆕 Progress indicators
+│   ├── layout/                    # Layout components
+│   │   ├── Header.vue             🚧 Navigation header with theme switcher
+│   │   ├── Hero.vue               ✅ Home page hero with semantic text
+│   │   └── Footer.vue             🆕 Simple footer with theme consistency
+│   ├── resume/                    # Resume-related components
+│   │   ├── ResumeUploader.vue     ✅ Enhanced with theme-aware animations
+│   │   ├── ResumePreview.vue      ✅ File info with semantic text hierarchy
+│   │   └── ResumeStatus.vue       🆕 Upload status with theme colors
+│   ├── analysis/                  # Analysis result components
+│   │   ├── ATSResults.vue         🆕 ATS-only results
 │   │   ├── JobComparisonResults.vue 🆕 Job comparison results
-│   │   ├── ScoreCard.vue            🆕 Score visualization
-│   │   └── RecommendationsList.vue  🆕 Action items
-│   └── shared/                      # Shared components
+│   │   ├── ScoreCard.vue          🆕 Score visualization with theme colors
+│   │   └── RecommendationsList.vue 🆕 Action items with semantic hierarchy
+│   └── shared/                    # Shared components
 │       ├── AnalysisTypeSelector.vue 🆕 Choose analysis type
-│       └── JobDescriptionInput.vue  ✅ Job posting input
-├── pages/                           # Application pages
-│   ├── index.vue                    ✅ Enhanced home with hero & animations
-│   ├── ats-scanner.vue              🆕 ATS-only analysis
-│   ├── job-comparison.vue           🆕 Job comparison analysis
-│   └── results/                     # Results pages
-│       ├── ats/[id].vue            🆕 ATS analysis results
-│       └── comparison/[id].vue      🆕 Comparison results
-├── stores/                          # Pinia state management
-│   ├── resume.ts                    ✅ File & text management (IMPLEMENTED)
-│   ├── analysis.ts                  🆕 Analysis results & status
-│   └── ui.ts                        🆕 UI state management
-├── server/api/                      # Backend API routes
-│   ├── analyze/
-│   │   ├── ats.post.ts             🆕 ATS-only analysis
-│   │   └── comparison.post.ts       🆕 Job comparison analysis
-│   ├── upload.post.ts              ✅ File upload & extraction
-│   └── health.get.ts               🆕 API health check
-├── utils/                          # Utility functions
-│   ├── fileValidator.ts            ✅ File validation
-│   ├── documentProcessor.ts        ✅ Text extraction
-│   ├── gemini/                     # AI integration
-│   │   ├── client.ts               ✅ Gemini API client
-│   │   ├── atsPrompts.ts           🆕 ATS-specific prompts
-│   │   └── comparisonPrompts.ts    🆕 Job comparison prompts
-│   └── analytics.ts                🆕 User interaction tracking
-├── types/                          # TypeScript definitions
-│   ├── fileValidation.ts          ✅ File validation types
-│   ├── documentProcessor.ts       ✅ Text extraction types
-│   ├── resume.ts                   🆕 Resume data types
-│   ├── analysis.ts                 🆕 Analysis result types
-│   └── stores.ts                   🆕 Store state types
-└── assets/css/
-    └── main.css                    ✅ Notion-style design system with animations
+│       └── JobDescriptionInput.vue  ✅ Job posting input with theme support
+├── stores/                        # Pinia state management
+│   ├── resume.ts                  ✅ File & text management
+│   ├── analysis.ts                🆕 Analysis results & status
+│   ├── ui.ts                      🆕 UI state management
+│   └── theme.ts                   🆕 Theme switching and persistence
+├── pages/                         # Application pages
+│   ├── index.vue                  ✅ Enhanced home with semantic theme
+│   ├── ats-scanner.vue            🆕 ATS-only analysis
+│   ├── job-comparison.vue         🆕 Job comparison analysis
+│   └── results/                   # Results pages
+│       ├── ats/[id].vue          🆕 ATS analysis results
+│       └── comparison/[id].vue    🆕 Comparison results
+└── server/api/                    # Backend API routes
+    ├── analyze/
+    │   ├── ats.post.ts           🆕 ATS-only analysis
+    │   └── comparison.post.ts     🆕 Job comparison analysis
+    ├── upload.post.ts            ✅ File upload & extraction
+    └── health.get.ts             🆕 API health check
 ```
 
 ## 🛠️ Development Phases
 
-### Phase 1: Core Setup ✅ **COMPLETED**
-- [x] Nuxt 3 + TypeScript + TailwindCSS v4
-- [x] Google Gen AI SDK integration
-- [x] Project structure establishment
+### Phase 1-4: Foundation ✅ **COMPLETED**
+- [x] Nuxt 3 + TypeScript + TailwindCSS v4 setup
+- [x] File processing and AI integration
+- [x] Enhanced UI with Pinia state management
+- [x] Animated components and cross-page persistence
 
-### Phase 2: File Processing ✅ **COMPLETED**
-- [x] File upload with validation (PDF/DOCX)
-- [x] Text extraction (mammoth + pdf-parse)
-- [x] Server-side processing with error handling
-- [x] TypeScript interfaces for file operations
+### Phase 5: Core Theme System & Navigation ✅ **COMPLETED**
+- [x] TailwindCSS 4.0 @theme configuration implementation
+- [x] Semantic color system with content-based naming
+- [x] Multi-theme support (light, dark, ocean, forest, sunset)
+- [x] Responsive navigation header with theme switcher
+- [x] Mobile menu with slide animations
 
-### Phase 3: AI Integration ✅ **COMPLETED**
-- [x] Gemini API client setup
-- [x] Enhanced AI prompts based on ATS research
-- [x] Job description comparison functionality
-- [x] Structured analysis results parsing
+### Phase 6: Analysis Pages 🚧 **CURRENT PHASE**
+- [ ] Separate ATS Scanner page with theme-aware components
+- [ ] Job Comparison page with semantic text hierarchy
+- [ ] Analysis results display with theme consistency
+- [ ] Score visualization using theme color palette
+- [ ] Actionable recommendations with semantic styling
 
-### Phase 4: Enhanced UI & State Management ✅ **COMPLETED**
-- [x] Pinia store setup for state management
-- [x] Notion-style design system implementation
-- [x] Enhanced home page with hero section and animations
-- [x] Animated resume upload component
-- [x] Cross-page data persistence
+### Phase 7: Results Visualization 🚧 **PLANNED**
+- [ ] Score cards with animated progress rings using theme colors
+- [ ] Interactive recommendations with semantic text hierarchy
+- [ ] Before/after comparison views with theme support
+- [ ] Detailed analysis breakdown with consistent styling
+- [ ] Export functionality with theme-aware PDF generation
 
-### Phase 5: Analysis Pages 🚧 **CURRENT PHASE**
-- [ ] Separate ATS Scanner page with formatting analysis
-- [ ] Job Comparison page with keyword matching
-- [ ] Analysis results display components
-- [ ] Score visualization and progress indicators
-- [ ] Actionable recommendations with priority levels
+### Phase 8: Polish & Optimization 🚧 **PLANNED**
+- [ ] Loading states and micro-animations with theme colors
+- [ ] Performance optimization for theme switching
+- [ ] Mobile responsiveness testing across all themes
+- [ ] Analytics and user tracking with theme preferences
+- [ ] SEO optimization with theme meta tags
 
-### Phase 6: Results Visualization 🚧 **PLANNED**
-- [ ] Score cards with animated progress rings
-- [ ] Interactive recommendations lists
-- [ ] Before/after comparison views
-- [ ] Detailed analysis breakdown sections
-- [ ] Export functionality for results
+## 🎯 Theme Implementation Examples
 
-### Phase 7: Polish & Optimization 🚧 **PLANNED**
-- [ ] Loading states and micro-animations
-- [ ] Performance optimization
-- [ ] Mobile responsiveness testing
-- [ ] Analytics and user tracking
-- [ ] SEO optimization
+### Component with Semantic Colors
 
-## 🎨 Design System - Notion-Style UI
+```vue
+<template>
+  <!-- Hero section with semantic text hierarchy -->
+  <section class="bg-surface py-16">
+    <div class="container-section">
+      <h1 class="text-hero text-content-base mb-4">
+        Optimize Your Resume
+      </h1>
+      <p class="text-subtitle text-content-secondary mb-8">
+        AI-powered analysis for ATS compatibility
+      </p>
+      <button class="btn-primary">
+        Get Started
+      </button>
+      
+      <!-- Subtle supporting text -->
+      <p class="text-sm text-content-tertiary/70 mt-4">
+        No signup required • Free analysis
+      </p>
+    </div>
+  </section>
+</template>
+```
 
-### Global Theme Variables
+### Card Component with Theme Support
 
-Define these custom CSS variables in `assets/css/main.css` for consistent theming:
+```vue
+<template>
+  <div class="card-base card-padding">
+    <h3 class="text-lg font-semibold text-content-base mb-2">
+      Analysis Results
+    </h3>
+    <p class="text-content-secondary mb-4">
+      Your resume scored 85% for ATS compatibility
+    </p>
+    
+    <!-- Status indicator with semantic colors -->
+    <div class="flex items-center space-x-2">
+      <div class="w-3 h-3 bg-success rounded-full"></div>
+      <span class="text-sm text-content-tertiary">
+        Good ATS compatibility
+      </span>
+    </div>
+  </div>
+</template>
+```
 
-```css
-:root {
-  /* Colors */
-  --color-primary: #2563eb;      /* blue-600 */
-  --color-primary-hover: #1d4ed8; /* blue-700 */
-  --color-primary-light: #dbeafe; /* blue-50 */
-  
-  /* Neutral Colors */
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-600: #4b5563;
-  --color-gray-900: #111827;
-  
-  /* Status Colors */
-  --color-success: #059669;      /* green-600 */
-  --color-success-light: #d1fae5; /* green-50 */
-  --color-warning: #d97706;      /* amber-600 */
-  --color-warning-light: #fef3c7; /* amber-50 */
-  --color-error: #dc2626;        /* red-600 */
-  --color-error-light: #fee2e2;   /* red-50 */
-  
-  /* Spacing */
-  --space-xs: 0.25rem;           /* 4px */
-  --space-sm: 0.5rem;            /* 8px */
-  --space-md: 0.75rem;           /* 12px */
-  --space-lg: 1rem;              /* 16px */
-  --space-xl: 1.5rem;            /* 24px */
-  --space-2xl: 2rem;             /* 32px */
-  --space-3xl: 3rem;             /* 48px */
-  
-  /* Border Radius */
-  --radius-sm: 0.375rem;         /* 6px */
-  --radius-md: 0.5rem;           /* 8px */
-  --radius-lg: 0.75rem;          /* 12px */
-  --radius-xl: 1rem;             /* 16px */
-  
-  /* Text Sizes */
-  --text-xs: 0.75rem;            /* 12px */
-  --text-sm: 0.875rem;           /* 14px */
-  --text-base: 1rem;             /* 16px */
-  --text-lg: 1.125rem;           /* 18px */
-  --text-xl: 1.25rem;            /* 20px */
-  --text-2xl: 1.5rem;            /* 24px */
-  --text-3xl: 1.875rem;          /* 30px */
-  --text-6xl: 3.75rem;           /* 60px */
-  --text-8xl: 6rem;              /* 96px */
+### Theme Switcher Component
+
+```vue
+<template>
+  <div class="flex items-center space-x-2">
+    <button 
+      v-for="theme in themes" 
+      :key="theme.id"
+      @click="setTheme(theme.id)"
+      :class="[
+        'w-8 h-8 rounded-full border-2 transition-all',
+        currentTheme === theme.id 
+          ? 'border-content-base scale-110' 
+          : 'border-border hover:border-content-tertiary'
+      ]"
+      :style="{ backgroundColor: theme.color }"
+    >
+      <span class="sr-only">{{ theme.name }}</span>
+    </button>
+  </div>
+</template>
+
+<script setup lang="ts">
+const themes = [
+  { id: 'light', name: 'Light', color: '#ffffff' },
+  { id: 'dark', name: 'Dark', color: '#0f172a' },
+  { id: 'ocean', name: 'Ocean', color: '#0891b2' },
+  { id: 'forest', name: 'Forest', color: '#16a34a' },
+  { id: 'sunset', name: 'Sunset', color: '#ea580c' }
+]
+
+const { currentTheme, setTheme } = useThemeStore()
+</script>
+```
+
+## 🔄 User Flows with Theme Consistency
+
+### Flow 1: ATS Scanner
+1. **Enhanced Home Page** → Semantic text hierarchy → Theme-aware upload
+2. **ATS Scanner Page** → Consistent theme colors → Analysis processing
+3. **ATS Results Page** → Theme-based score visualization → Semantic recommendations
+
+### Flow 2: Job Comparison  
+1. **Enhanced Home Page** → Theme-consistent design → Upload component
+2. **Job Comparison Page** → Semantic input styling → Theme-aware processing
+3. **Comparison Results Page** → Consistent color scheme → Hierarchical text display
+
+## 🧪 Testing Guidelines
+
+### Theme Testing Checklist
+- [ ] **Text Readability**: Verify contrast ratios across all themes
+- [ ] **Component Consistency**: Ensure all components adapt to theme changes
+- [ ] **Interactive States**: Test hover, focus, and active states in each theme
+- [ ] **Mobile Experience**: Verify theme switching works on mobile devices
+- [ ] **Theme Persistence**: Confirm theme preferences are saved and restored
+
+### Semantic Color Testing
+- [ ] **Text Hierarchy**: Verify content-base > secondary > tertiary visibility
+- [ ] **Opacity Modifiers**: Test /90, /70, /50 opacity variants
+- [ ] **Status Colors**: Ensure success, warning, error colors are distinguishable
+- [ ] **Interactive Elements**: Verify primary, hover states work in all themes
+
+## 🔌 API Documentation
+
+### File Upload API (`/api/upload`)
+
+The upload API handles file processing and text extraction with a standardized response format.
+
+#### **Request Format**
+```typescript
+POST /api/upload
+Content-Type: multipart/form-data
+
+FormData {
+  file: File (PDF or DOCX, max 10MB)
 }
 ```
 
-### TailwindCSS Best Practices
+#### **Response Format**
 
-#### **Standard Class Order Pattern**
-Follow this consistent order for utility classes for maintainable and readable code:
-
-1. **Layout**: `flex`, `grid`, `block`, `inline`, `hidden`
-2. **Positioning**: `relative`, `absolute`, `fixed`, `top-4`, `left-0`
-3. **Box Model**: `w-full`, `h-screen`, `max-w-lg`, `min-h-0`
-4. **Spacing**: `p-4`, `m-2`, `px-6`, `py-3`, `space-y-4`, `gap-4`
-5. **Typography**: `text-lg`, `font-medium`, `leading-relaxed`, `text-center`
-6. **Visual**: `bg-white`, `border`, `border-gray-200`, `rounded`, `shadow`
-7. **Interactive**: `hover:bg-blue-500`, `focus:outline-none`, `transition-colors`
-
-#### **Component-Specific Patterns**
-
-**File Upload Areas:**
-```
-border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 cursor-pointer hover:border-gray-400 hover:bg-gray-100 transition-all duration-200
-```
-
-**Form Elements:**
-```
-w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-```
-
-**Cards and Containers:**
-```
-w-full max-w-lg p-6 bg-white border border-gray-200 rounded-xl shadow-lg
-```
-
-**Primary Buttons:**
-```
-inline-flex items-center px-6 py-3 text-white font-medium bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors
-```
-
-**Secondary Buttons:**
-```
-inline-flex items-center px-4 py-2 text-gray-700 font-medium bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors
-```
-
-**Status Indicators:**
-```
-<!-- Success -->
-flex items-center space-x-2 p-4 bg-green-50 border border-green-200 rounded-lg
-
-<!-- Error -->
-flex items-center space-x-2 p-4 bg-red-50 border border-red-200 rounded-lg
-
-<!-- Warning -->
-flex items-center space-x-2 p-4 bg-yellow-50 border border-yellow-200 rounded-lg
-```
-
-### Color Palette
-- **Primary Colors**: `blue-600`, `blue-700`, `blue-50`
-- **Neutral Colors**: `gray-50`, `gray-100`, `gray-200`, `gray-300`, `gray-600`, `gray-900`
-- **Status Colors**: `green-600`, `amber-600`, `red-600`
-- **Use CSS variables**: `var(--color-primary)` for consistent theming
-
-### Typography Hierarchy
-- **Hero Text**: `text-8xl` (desktop), `text-6xl` (mobile) - font-bold
-- **Large Description**: `text-3xl` - font-normal
-- **Headers**: `text-h1` through `text-h4` with appropriate font weights
-- **Body Text**: `text-lg`, `text-base`, `text-sm` with font-normal
-- **Use CSS variables**: `var(--text-lg)` for consistent sizing
-
-## 🗄️ State Management with Pinia
-
-### Resume Store ✅ **IMPLEMENTED**
-- File state management (File, text, status, progress)
-- Upload actions with error handling
-- Cross-page data persistence
-- Computed properties for UI state
-
-### Analysis Store 🚧 **PLANNED**
-- ATS and comparison results storage
-- Analysis type tracking
-- History management
-- Loading state management
-
-### UI Store 🚧 **PLANNED**
-- Global loading states
-- Notification system
-- Theme management
-- Navigation state
-
-## 📋 Phase 4 Completed Features
-
-### 1. **Pinia State Management** ✅
-- Resume store with TypeScript integration
-- Cross-page data persistence  
-- Upload progress tracking
-- Error state management
-
-### 2. **Enhanced Home Page** ✅
-- Notion-style typography (text-8xl headlines)
-- Balanced responsive layout
-- Animated arrow with glow effect
-- Mobile-first design approach
-
-### 3. **Animated Upload Component** ✅
-- 6 floating particles with staggered timing
-- Gradient animations on hover/drag states
-- Circular progress ring during upload
-- 280px drop zone with visual feedback
-- Scale effects and color transitions
-
-### 4. **Component Architecture** ✅
-- Separated ResumeUploader and ResumePreview
-- Store-based state management
-- Enhanced error handling with retry
-- Type-safe props and interfaces
-
-## 🔄 User Flows
-
-### Flow 1: ATS Scanner 🚧 **IN DEVELOPMENT**
-1. **Enhanced Home Page** → Animated upload → "Check ATS Compatibility"
-2. **ATS Scanner Page** → File processing → AI analysis
-3. **ATS Results Page** → Formatting score, parsing issues, recommendations
-
-### Flow 2: Job Comparison 🚧 **IN DEVELOPMENT**
-1. **Enhanced Home Page** → Animated upload → "Compare with Job"
-2. **Job Comparison Page** → Paste job description → AI analysis
-3. **Comparison Results Page** → Match score, missing keywords, targeted recommendations
-
-### Cross-Page Data Flow ✅ **IMPLEMENTED**
-- **Pinia stores** maintain resume data across page navigation
-- **File persistence** allows users to switch between analysis types
-- **Upload state management** with progress tracking and error handling
-
-## 🧪 Testing Features
-
-### Phase 4 Testing Features ✅ **COMPLETED**
-- **Enhanced Home Page**: Typography scaling, responsive design, animated elements
-- **Animated Upload**: Drag/drop, progress tracking, error states, retry functionality  
-- **State Management**: Upload file, navigate between pages, verify data persistence
-- **Component Separation**: ResumeUploader and ResumePreview work independently
-- **Cross-Page Flow**: File upload → page navigation → data retention
-
-### Phase 5 Testing Plan 🚧 **UPCOMING**
-- **Analysis Types**: Test both ATS and Job Comparison flows
-- **Results Display**: Verify score visualization and recommendations  
-- **Mobile Experience**: Test responsive behavior on all devices
-- **Performance**: Measure load times and animation smoothness
-
-## 🎯 Development Guidelines
-
-### Component Documentation Standard
-Every component must include:
-
-#### **Component Header Template**
-```vue
-<!-- 
-  📍 COMPONENT LOCATION: components/[folder]/ComponentName.vue
-  🎯 PURPOSE: Brief description of component purpose
-  🔧 PHASE: Phase X - [Phase Name]
--->
-```
-
-#### **Component Footer Documentation**
-```vue
-<!-- 
-  🔗 HOW THIS COMPONENT WORKS:
+**Success Response:**
+```typescript
+{
+  success: true,                    // Always true for successful uploads
+  text: string,                     // Extracted text content
+  wordCount: number,                // Number of words in extracted text
+  charCount: number,                // Number of characters in extracted text
   
-  📋 PURPOSE:
-  - Main responsibility
-  - Key features
-  - What it displays/handles
-  
-  📊 STATE MANAGEMENT:
-  - Store connections
-  - Local state usage
-  - Data flow patterns
-  
-  🔌 CONNECTIONS:
-  - stores/storeName.ts: What it reads/writes
-  - utils/utilName.ts: Helper functions used
-  - components/path/Component.vue: Related components
-  
-  📱 USAGE:
-  <ComponentName />
-  <ComponentName :prop="value" />
-  
-  🎯 KEY FEATURES:
-  - Feature 1
-  - Feature 2
-  - Feature 3
-  
-  🚫 WHAT IT DOESN'T DO:
-  - Responsibility it doesn't handle
-  - What other components handle instead
-  
-  📋 TYPICAL USAGE PATTERN:
-  Example of how it's used with other components
--->
+  // Optional metadata
+  fileName?: string,                // Original filename
+  fileSize?: number,                // File size in bytes
+  fileType?: string,                // MIME type
+  processingTime?: number,          // Processing time in milliseconds
+  warnings?: string[],              // Non-critical issues
+  timestamp?: string                // ISO timestamp
+}
 ```
 
-### Component Philosophy
-- **Minimal Working Version**: Each component should be the simplest implementation that works
-- **No Over-engineering**: Avoid extra features, complex styling, or unnecessary abstractions
-- **Single Responsibility**: Each component does one thing well
-- **Progressive Enhancement**: Start basic, improve incrementally
-
-### Code Standards
-- Use TypeScript for type safety with comprehensive interfaces
-- Keep components under 100 lines when possible
-- Focus on functionality over aesthetics initially
-- Comment AI prompts and API integrations clearly
-- **Always include component path and documentation**
-- **Use global CSS variables for theming consistency**
-- **Follow the component documentation template**
-
-### Responsive Design Patterns
-```
-<!-- Mobile-first responsive container -->
-w-full max-w-sm mx-auto md:max-w-lg lg:max-w-4xl
-
-<!-- Responsive grid -->
-grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3
-
-<!-- Responsive text -->
-text-2xl font-bold md:text-3xl lg:text-4xl
+**Error Response:**
+```typescript
+{
+  success: false,                   // Always false for errors
+  error: string,                    // Human-readable error message
+  statusCode?: number,              // HTTP status code
+  details?: string[],               // Detailed error information
+  timestamp?: string                // ISO timestamp
+}
 ```
 
-### Utility-First Approach
-- **Prefer utilities** over custom CSS classes
-- **Use component classes** only for complex, reusable patterns
-- **Group related utilities** logically in the class order
-- **Keep classes readable** - break long class lists across lines when needed
+#### **Store Integration**
+
+The Pinia store expects the exact response format above. Key field mappings:
+
+```typescript
+// Store expects these exact field names:
+interface ExpectedResponse {
+  success: boolean                  // ✅ Must be exactly 'success'
+  text: string                      // ✅ Must be 'text' (not 'extractedText')
+  wordCount: number                 // ✅ Must be 'wordCount'
+  charCount: number                 // ✅ Must be 'charCount' (not 'characterCount')
+  error?: string                    // ✅ Error message if success: false
+}
+```
+
+#### **Common API Response Issues**
+
+❌ **Incorrect nested format:**
+```typescript
+{
+  success: true,
+  data: {                         // ❌ Don't nest in 'data' object
+    extractedText: "...",         // ❌ Should be 'text'
+    wordCount: 350
+  }
+}
+```
+
+✅ **Correct flat format:**
+```typescript
+{
+  success: true,
+  text: "...",                    // ✅ Direct field, named 'text'
+  wordCount: 350,                 // ✅ Direct field
+  charCount: 2450                 // ✅ Direct field
+}
+```
+
+#### **Error Handling Best Practices**
+
+1. **Always return error responses** (don't throw for client errors)
+2. **Use consistent error format** with `success: false`
+3. **Provide helpful error messages** for debugging
+4. **Include status codes** for different error types
+
+```typescript
+// File validation error
+{
+  success: false,
+  error: "File validation failed",
+  statusCode: 400,
+  details: ["File size exceeds 10MB limit", "Invalid file type"]
+}
+
+// Processing error  
+{
+  success: false,
+  error: "Text extraction failed",
+  statusCode: 422,
+  details: ["Corrupted PDF file", "Unable to parse document structure"]
+}
+
+// Server error
+{
+  success: false,
+  error: "Internal server error",
+  statusCode: 500
+}
+```
+
+### Analysis APIs (Planned)
+
+#### **ATS Analysis** (`/api/analyze/ats`)
+```typescript
+POST /api/analyze/ats
+{
+  text: string,                   // Resume text content
+  options?: {
+    strictMode?: boolean,
+    includeWarnings?: boolean
+  }
+}
+
+Response: {
+  success: boolean,
+  score: number,                  // 0-100 ATS compatibility score
+  issues: ATSIssue[],            // Formatting and parsing issues
+  recommendations: string[],      // Actionable improvements
+  processingTime?: number
+}
+```
+
+#### **Job Comparison** (`/api/analyze/comparison`)
+```typescript
+POST /api/analyze/comparison
+{
+  resumeText: string,             // Resume content
+  jobDescription: string,         // Job posting content
+  options?: {
+    includeKeywordAnalysis?: boolean,
+    skillsMatching?: boolean
+  }
+}
+
+Response: {
+  success: boolean,
+  matchScore: number,             // 0-100 job match score
+  keywordMatches: KeywordMatch[], // Matched/missing keywords
+  skillsGap: string[],           // Missing skills
+  recommendations: string[],      // Targeted improvements
+  processingTime?: number
+}
+```
 
 ## 🚀 Getting Started
 
@@ -467,73 +563,82 @@ NUXT_SECRET_KEY=your_app_secret_key
 npm run dev
 ```
 
-## 🎯 Success Metrics
+### 4. API Development Guidelines
 
-### Phase 4 Achievements ✅
-- **User Engagement**: Enhanced visual appeal increases time on home page
-- **Upload Success Rate**: Better error handling improves successful uploads
-- **Mobile Experience**: Responsive design ensures consistent experience across devices
-- **Developer Experience**: Cleaner architecture reduces development time
+#### **Response Format Standards**
+- Always use flat response structure (no nested `data` objects)
+- Use consistent field naming across all endpoints
+- Return errors as responses (don't throw for client errors)
+- Include helpful error messages and status codes
 
-### Phase 5 Goals 🚧
-- **Analysis Completion**: Percentage of users completing full analysis
-- **Feature Usage**: Adoption rate of ATS vs Job Comparison features
-- **User Satisfaction**: Feedback on analysis quality and results presentation
+#### **Store Integration Requirements**
+- API responses must match store interface expectations exactly
+- Field names are case-sensitive and must be precise
+- Boolean fields must be actual booleans, not strings
+- Error responses must include `success: false`
 
-## 🔮 Future Enhancements
+#### **Testing API Responses**
+```bash
+# Test upload endpoint
+curl -X POST http://localhost:3000/api/upload \
+  -F "file=@test-resume.pdf"
 
-### Phase 6+ Ideas
-- **Resume Builder**: AI-powered resume creation based on analysis
-- **Job Board Integration**: Direct job matching based on resume analysis
-- **Team Features**: HR teams analyzing candidate resumes
-- **API Access**: Developers integrating ATS analysis into their tools
-- **Premium Features**: Advanced analysis, industry reports, coaching
+# Expected response format
+{
+  "success": true,
+  "text": "Resume content...",
+  "wordCount": 350,
+  "charCount": 2450,
+  "fileName": "test-resume.pdf",
+  "processingTime": 150
+}
+```
 
-## 📖 AI Integration Details
+### 5. Theme Development
+- All theme configuration is in `assets/css/main.css`
+- Use semantic color utilities: `text-content-base`, `bg-surface`, etc.
+- Test components across multiple themes
+- Follow the semantic naming convention for new colors
 
-### Research-Based Prompts ✅ **IMPLEMENTED**
-- **Debunks Myths**: Based on actual ATS functionality research
-- **Industry Specific**: Tailored recommendations for different sectors
-- **Contextual Analysis**: Goes beyond simple keyword matching
-- **Actionable Output**: Specific, implementable recommendations
+### 6. Debugging File Upload Issues
 
-### Analysis Types ✅ **IMPLEMENTED**
-1. **ATS Scanner**: Format, structure, parsing compatibility
-2. **Job Matcher**: Keyword alignment, experience relevance, skill gaps
-3. **Combined Insights**: Holistic recommendations for specific applications
+If file upload shows "error" status but server logs show success:
 
-## 📝 Current Development Status
+1. **Check API response format** matches store expectations
+2. **Verify field names** are exact (`text` not `extractedText`)
+3. **Ensure flat structure** (no nested objects)
+4. **Test API directly** with curl or Postman
+5. **Use browser dev tools** to inspect actual response
 
-**Phase 4 Complete! ✅**
-- Enhanced home page with Notion-style design and animations
-- Pinia state management with cross-page data persistence
-- Separated ResumeUploader and ResumePreview components
-- Animated upload component with floating particles and progress tracking
-- Global theme variables system implemented
-- Component documentation standards established
+Common debugging commands:
+```typescript
+// In browser console after upload error:
+const store = useResumeStore()
+store.debugState() // Shows current store state
 
-**Currently Working On: Phase 5 - Analysis Pages 🚧**
-- Building separate ATS Scanner page (`pages/ats-scanner.vue`)
-- Creating Job Comparison page (`pages/job-comparison.vue`)
-- Developing analysis result components
-- Implementing score visualization components
+// Check network tab for actual API response format
+// Compare with expected format in store interface
+```
 
-**Next: Phase 5 - Continue building analysis pages with proper component documentation**
+## 📝 Development Status
 
-### Recent Component Implementations
+**Phase 5 Complete! ✅**
+- TailwindCSS 4.0 theme system fully implemented
+- Semantic color naming with content-based hierarchy
+- Multi-theme support with automatic color adaptation
+- Responsive navigation with theme switcher
+- Mobile menu with smooth animations
 
-#### **ResumePreview.vue** ✅ **COMPLETED**
-- **Location**: `components/resume/ResumePreview.vue`
-- **Purpose**: Display uploaded resume information and actions
-- **Features**: File metadata display, replace/remove actions, text preview
-- **Connections**: `stores/resume.ts`, `utils/fileValidator.ts`
-- **Usage Pattern**: Shows when file is uploaded, pairs with ResumeUploader
+**Currently Working On: Phase 6 - Analysis Pages 🚧**
+- Building ATS Scanner page with theme-aware components
+- Implementing Job Comparison page with semantic text styling
+- Creating analysis results display with theme consistency
+- Developing score visualization using theme color palette
 
-#### **ResumeUploader.vue** ✅ **COMPLETED**  
-- **Location**: `components/resume/ResumeUploader.vue`
-- **Purpose**: Handle file upload with animations and progress tracking
-- **Features**: Drag & drop, floating particles, progress indicators
-- **Connections**: `stores/resume.ts`, `server/api/upload.post.ts`
-- **Usage Pattern**: Shows when no file uploaded, replaced by ResumePreview
+**Key Phase 6 Objectives:**
+- **Semantic Styling**: All text uses content-based color utilities
+- **Theme Consistency**: Components adapt seamlessly across themes
+- **Analysis Components**: Results display with theme-aware visualizations
+- **Performance**: Smooth theme switching without layout shifts
 
-This enhanced MVP provides a professional, research-backed tool that genuinely helps job seekers optimize their resumes for modern hiring processes while delivering an exceptional user experience.
+This enhanced theme system provides a professional, consistent design that adapts beautifully across multiple themes while maintaining excellent accessibility and user experience.

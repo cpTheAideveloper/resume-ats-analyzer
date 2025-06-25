@@ -1,18 +1,19 @@
 <!-- 
   📍 COMPONENT LOCATION: components/resume/ResumeUploader.vue
   🎯 PURPOSE: Attractive animated file upload interface for resumes
+  🔧 PHASE: Phase 5 - Core Theme System & Navigation
 -->
 
 <template>
   <div class="flex flex-col w-full max-w-lg mx-auto space-y-4 h-full">
-    <!-- Main Upload Area - Enhanced with animations -->
+    <!-- Main Upload Area - Enhanced with semantic theme system -->
     <div
       @drop.prevent="handleDrop"
       @dragover.prevent="handleDragOver"
       @dragenter.prevent="handleDragEnter"
       @dragleave.prevent="handleDragLeave"
       @click="triggerFileInput"
-      class="relative flex flex-col items-center justify-center w-full p-12 text-center border-3 h-full border-dashed rounded-3xl cursor-pointer transition-all duration-300 overflow-hidden group"
+      class="relative flex flex-col items-center justify-center w-full p-12 text-center border-2 border-dashed rounded-3xl cursor-pointer transition-all duration-300 overflow-hidden group"
       :class="uploadAreaClasses"
       style="min-height: 280px;"
     >
@@ -24,7 +25,7 @@
           'opacity-0': !isDragging && !isUploading
         }"
       >
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 animate-gradient-xy"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-light via-surface-secondary to-accent-light animate-gradient"></div>
       </div>
 
       <!-- Floating particles animation -->
@@ -32,7 +33,7 @@
         <div 
           v-for="i in 6" 
           :key="i"
-          class="absolute w-2 h-2 bg-blue-400 rounded-full opacity-30 animate-float"
+          class="absolute w-2 h-2 bg-primary rounded-full opacity-30 animate-float"
           :style="{ 
             left: `${15 + (i * 12)}%`, 
             top: `${20 + (i * 8)}%`,
@@ -50,9 +51,9 @@
           <div 
             class="absolute inset-0 rounded-full animate-ping"
             :class="{
-              'bg-blue-200': resumeStore.uploadStatus === 'idle',
-              'bg-green-200': resumeStore.uploadStatus === 'success',
-              'bg-red-200': resumeStore.uploadStatus === 'error'
+              'bg-primary-light': resumeStore.uploadStatus === 'idle',
+              'bg-success-light': resumeStore.uploadStatus === 'success',
+              'bg-error-light': resumeStore.uploadStatus === 'error'
             }"
             style="animation-duration: 2s;"
           ></div>
@@ -61,10 +62,10 @@
           <div 
             class="relative flex items-center justify-center w-20 h-20 rounded-full transition-all duration-300 transform"
             :class="{
-              'bg-blue-100 scale-110': isDragging,
-              'bg-green-100': resumeStore.uploadStatus === 'success',
-              'bg-red-100': resumeStore.uploadStatus === 'error',
-              'bg-gray-100 group-hover:bg-blue-100 group-hover:scale-105': resumeStore.uploadStatus === 'idle'
+              'bg-primary-light scale-110': isDragging,
+              'bg-success-light': resumeStore.uploadStatus === 'success',
+              'bg-error-light': resumeStore.uploadStatus === 'error',
+              'bg-surface-tertiary group-hover:bg-primary-light group-hover:scale-105': resumeStore.uploadStatus === 'idle'
             }"
           >
             <!-- Status Icon with animations -->
@@ -94,27 +95,27 @@
           </div>
           
           <!-- File type info with icons -->
-          <div class="flex items-center justify-center space-x-4 text-sm text-gray-500">
+          <div class="flex items-center justify-center space-x-4 text-sm text-content-secondary">
             <div class="flex items-center space-x-1">
-              <Icon name="heroicons:document-text" class="w-4 h-4 text-red-500" />
+              <Icon name="heroicons:document-text" class="w-4 h-4 text-error" />
               <span>PDF</span>
             </div>
-            <div class="w-1 h-1 bg-gray-300 rounded-full"></div>
+            <div class="w-1 h-1 bg-border rounded-full"></div>
             <div class="flex items-center space-x-1">
-              <Icon name="heroicons:document" class="w-4 h-4 text-blue-500" />
+              <Icon name="heroicons:document" class="w-4 h-4 text-primary" />
               <span>DOCX</span>
             </div>
-            <div class="w-1 h-1 bg-gray-300 rounded-full"></div>
+            <div class="w-1 h-1 bg-border rounded-full"></div>
             <span>Max 10MB</span>
           </div>
         </div>
 
         <!-- Drag & Drop Visual Indicator -->
         <div 
-          class="flex items-center space-x-2 text-gray-400 transition-all duration-300"
+          class="flex items-center space-x-2 text-content-tertiary transition-all duration-300"
           :class="{
-            'text-blue-500 scale-105': isDragging,
-            'group-hover:text-gray-600': !isDragging
+            'text-primary scale-105': isDragging,
+            'group-hover:text-content-secondary': !isDragging
           }"
         >
           <Icon name="heroicons:cursor-arrow-rays" class="w-5 h-5 animate-bounce" />
@@ -136,7 +137,7 @@
             stroke="currentColor"
             stroke-width="2"
             fill="transparent"
-            class="text-gray-200"
+            class="text-border-secondary"
           />
           <circle
             cx="50"
@@ -146,7 +147,7 @@
             stroke-width="3"
             fill="transparent"
             stroke-linecap="round"
-            class="text-blue-500 transition-all duration-300"
+            class="text-primary transition-all duration-300"
             :stroke-dasharray="`${2 * Math.PI * 45}`"
             :stroke-dashoffset="`${2 * Math.PI * 45 * (1 - resumeStore.uploadProgress / 100)}`"
           />
@@ -166,13 +167,13 @@
 
     <!-- Upload Progress Bar (Alternative) -->
     <div v-if="resumeStore.uploadStatus === 'uploading'" class="w-full">
-      <div class="flex items-center justify-between text-base text-gray-700 mb-3 font-medium">
+      <div class="flex items-center justify-between text-base text-content-base mb-3 font-medium">
         <span>Uploading your resume...</span>
-        <span class="text-blue-600">{{ resumeStore.uploadProgress }}%</span>
+        <span class="text-primary">{{ resumeStore.uploadProgress }}%</span>
       </div>
-      <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+      <div class="w-full bg-surface-tertiary rounded-full h-3 overflow-hidden border border-border-secondary">
         <div 
-          class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300 relative"
+          class="h-full bg-gradient-to-r from-primary to-primary-hover rounded-full transition-all duration-300 relative"
           :style="{ width: `${resumeStore.uploadProgress}%` }"
         >
           <!-- Shimmer effect -->
@@ -186,22 +187,22 @@
       <div 
         v-for="error in validationErrors" 
         :key="error"
-        class="flex items-start space-x-3 p-4 bg-red-50 border-l-4 border-red-400 rounded-r-xl animate-slideIn"
+        class="flex items-start space-x-3 p-4 bg-error-light border-l-4 border-error rounded-r-xl animate-fade-in-up"
       >
-        <Icon name="heroicons:exclamation-triangle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0 animate-pulse" />
-        <p class="text-base text-red-700 font-medium">{{ error }}</p>
+        <Icon name="heroicons:exclamation-triangle" class="w-5 h-5 text-error mt-0.5 flex-shrink-0 animate-pulse" />
+        <p class="text-base text-error-dark font-medium">{{ error }}</p>
       </div>
     </div>
 
     <!-- Upload Error with Retry -->
     <div v-if="resumeStore.uploadError" class="space-y-3">
-      <div class="flex items-start space-x-3 p-4 bg-red-50 border-l-4 border-red-400 rounded-r-xl animate-slideIn">
-        <Icon name="heroicons:exclamation-triangle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+      <div class="flex items-start space-x-3 p-4 bg-error-light border-l-4 border-error rounded-r-xl animate-fade-in-up">
+        <Icon name="heroicons:exclamation-triangle" class="w-5 h-5 text-error mt-0.5 flex-shrink-0" />
         <div class="flex-1">
-          <p class="text-base text-red-700 font-medium">{{ resumeStore.uploadError }}</p>
+          <p class="text-base text-error-dark font-medium">{{ resumeStore.uploadError }}</p>
           <button 
             @click="retryUpload"
-            class="mt-3 inline-flex items-center px-4 py-2 text-sm font-medium text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition-colors"
+            class="mt-3 inline-flex items-center px-4 py-2 text-sm font-medium text-error-dark bg-error-light rounded-lg hover:bg-error-light/80 transition-colors border border-error/20"
           >
             <Icon name="heroicons:arrow-path" class="w-4 h-4 mr-2" />
             Try again
@@ -230,23 +231,23 @@ const isUploading = computed(() =>
 )
 
 const uploadAreaClasses = computed(() => ({
-  // Base styles
-  'border-gray-300 bg-gray-50/50': resumeStore.uploadStatus === 'idle' && !isDragging.value,
+  // Base styles using semantic theme variables
+  'border-border bg-surface-secondary': resumeStore.uploadStatus === 'idle' && !isDragging.value,
   
   // Dragging state
-  'border-blue-400 bg-blue-50 scale-[1.02] shadow-lg border-solid': isDragging.value,
+  'border-primary bg-primary-light scale-[1.02] shadow-lg border-solid': isDragging.value,
   
   // Uploading state
-  'border-blue-400 bg-blue-50/80 border-solid': isUploading.value,
+  'border-primary bg-primary-light/80 border-solid': isUploading.value,
   
   // Success state
-  'border-green-400 bg-green-50 border-solid': resumeStore.uploadStatus === 'success',
+  'border-success bg-success-light border-solid': resumeStore.uploadStatus === 'success',
   
   // Error state
-  'border-red-400 bg-red-50 border-solid': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0,
+  'border-error bg-error-light border-solid': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0,
   
   // Hover state
-  'hover:border-gray-400 hover:bg-gray-100/50 hover:scale-[1.01] hover:shadow-md': 
+  'hover:border-border-accent hover:bg-surface-tertiary hover:scale-[1.01] hover:shadow-md': 
     resumeStore.uploadStatus === 'idle' && !isDragging.value && !isUploading.value
 }))
 
@@ -266,25 +267,25 @@ const statusIcon = computed(() => {
 
 const iconClasses = computed(() => ({
   'w-10 h-10': true,
-  'text-gray-500 group-hover:text-blue-500': resumeStore.uploadStatus === 'idle' && !isDragging.value,
-  'text-blue-500 animate-spin': isUploading.value,
-  'text-green-500 animate-bounce': resumeStore.uploadStatus === 'success',
-  'text-red-500 animate-pulse': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0,
-  'text-blue-600 animate-pulse': isDragging.value
+  'text-content-secondary group-hover:text-primary': resumeStore.uploadStatus === 'idle' && !isDragging.value,
+  'text-primary animate-spin': isUploading.value,
+  'text-success animate-bounce': resumeStore.uploadStatus === 'success',
+  'text-error animate-pulse': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0,
+  'text-primary animate-pulse': isDragging.value
 }))
 
 const textClasses = computed(() => ({
-  'text-gray-700 group-hover:text-gray-900': resumeStore.uploadStatus === 'idle' && !isDragging.value,
-  'text-blue-700': isUploading.value || isDragging.value,
-  'text-green-700': resumeStore.uploadStatus === 'success',
-  'text-red-700': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0
+  'text-content-base group-hover:text-content-base': resumeStore.uploadStatus === 'idle' && !isDragging.value,
+  'text-primary-dark': isUploading.value || isDragging.value,
+  'text-success-dark': resumeStore.uploadStatus === 'success',
+  'text-error-dark': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0
 }))
 
 const subtitleClasses = computed(() => ({
-  'text-gray-600 group-hover:text-gray-700': resumeStore.uploadStatus === 'idle' && !isDragging.value,
-  'text-blue-600': isUploading.value || isDragging.value,
-  'text-green-600': resumeStore.uploadStatus === 'success',
-  'text-red-600': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0
+  'text-content-secondary group-hover:text-content-base': resumeStore.uploadStatus === 'idle' && !isDragging.value,
+  'text-primary': isUploading.value || isDragging.value,
+  'text-success': resumeStore.uploadStatus === 'success',
+  'text-error': resumeStore.uploadStatus === 'error' || validationErrors.value.length > 0
 }))
 
 const statusTitle = computed(() => {
@@ -390,73 +391,14 @@ async function retryUpload() {
 }
 </script>
 
-<style scoped>
-@keyframes gradient-xy {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-    opacity: 0.6;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-gradient-xy {
-  background-size: 200% 200%;
-  animation: gradient-xy 3s ease infinite;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer 2s infinite;
-}
-
-.animate-slideIn {
-  animation: slideIn 0.3s ease-out;
-}
-</style>
-
 <!-- 
   🔗 HOW THIS COMPONENT WORKS:
   
   📋 PURPOSE:
   - Highly attractive and animated file upload interface
-  - Multiple visual states with smooth transitions
+  - Multiple visual states with smooth transitions using semantic theme colors
   - Enhanced user feedback with animations and progress indicators
-  - Larger, more engaging drop zone
+  - Larger, more engaging drop zone with theme-aware styling
   
   📊 STATE MANAGEMENT:
   - Uses useResumeStore() for file processing and status
@@ -468,28 +410,85 @@ async function retryUpload() {
   - utils/fileValidator.ts: File validation logic
   - server/api/upload.post.ts: Backend processing
   
-  🎨 ANIMATIONS & EFFECTS:
-  - Floating particles background animation
-  - Gradient background transitions
-  - Pulsing icon backgrounds
-  - Progress ring for upload status
+  🎨 SEMANTIC THEME COLORS USED:
+  
+  CONTENT COLORS (Text Hierarchy):
+  - text-content-base: Main headings and status titles
+  - text-content-secondary: File type info, drag hints
+  - text-content-tertiary: Supporting text, drag indicators
+  - group-hover:text-content-base: Hover state text transitions
+  
+  SURFACE COLORS (Backgrounds):
+  - bg-surface-secondary: Default upload area background
+  - bg-surface-tertiary: Icon background, progress bar background
+  - via-surface-secondary: Gradient background overlay
+  
+  BORDER COLORS:
+  - border-border: Default upload area border
+  - border-border-accent: Hover state borders
+  - border-border-secondary: Progress bar and subtle borders
+  
+  STATUS COLORS:
+  - bg-primary-light + text-primary: Upload/processing states
+  - bg-success-light + text-success: Success states
+  - bg-error-light + text-error: Error states
+  - text-primary-dark, text-success-dark, text-error-dark: High contrast text
+  
+  INTERACTIVE COLORS:
+  - text-primary: Active dragging, processing states
+  - border-primary: Active upload area border
+  - hover:bg-surface-tertiary: Hover state backgrounds
+  
+  📱 ENHANCED SEMANTIC FEATURES:
+  - Content hierarchy using semantic text colors (base > secondary > tertiary)
+  - Surface backgrounds that adapt to any theme automatically
+  - Status indicators using proper semantic status colors
+  - Interactive elements with theme-aware hover states
+  - Progress indicators using semantic primary colors
+  - Error states with semantic error color system
+  - Gradient overlays using semantic surface and primary colors
+  
+  🎯 ANIMATIONS & EFFECTS:
+  - Floating particles with semantic primary color
+  - Gradient background transitions using semantic surface colors
+  - Pulsing icon backgrounds with semantic status colors
+  - Progress ring with semantic primary color
   - Shimmer effect on progress bar
   - Scale and shadow transitions on hover/drag
-  - Color transitions based on status
+  - Color transitions based on status using semantic variables
   
-  📱 ENHANCED FEATURES:
-  - Larger drop zone (280px min-height)
-  - Better visual hierarchy with larger text
-  - File type indicators with icons
-  - Animated drag & drop hints
-  - Progress ring and bar animations
-  - Enhanced error states with slide-in animations
-  - Proper drag counter for accurate drag/leave detection
+  🎯 THEME ADAPTATION:
+  - All colors automatically adapt when theme changes
+  - Dark theme: Light text on dark surfaces with proper contrast
+  - Branded themes: Primary colors change while maintaining hierarchy
+  - Status colors remain semantically correct in all themes
+  - Hover states maintain proper contrast across themes
   
   🎯 INTERACTION STATES:
-  - Idle: Subtle hover effects and invitation to upload
-  - Dragging: Scale up, color change, animated feedback
-  - Uploading: Progress ring, shimmer effects, status text
-  - Success: Green state with celebration animations
-  - Error: Red state with retry functionality
+  - Idle: Subtle hover effects using semantic surface colors
+  - Dragging: Scale up, semantic primary colors, animated feedback
+  - Uploading: Progress ring, shimmer effects, semantic status colors
+  - Success: Semantic success colors with celebration animations
+  - Error: Semantic error colors with retry functionality
+  
+  🚫 WHAT IT DOESN'T DO:
+  - Handle file analysis (that's for analysis components)
+  - Store files permanently (temporary upload only)
+  - Handle multiple file uploads
+  - Perform theme switching (handled by parent/layout)
+  - Use any hardcoded color classes (all colors are semantic)
+  
+  📋 TYPICAL USAGE PATTERN:
+  <ResumeUploader v-if="!resumeStore.isFileUploaded" />
+  <ResumePreview v-else />
+  
+  🎯 SEMANTIC COLOR BENEFITS:
+  - Consistent visual hierarchy across all themes
+  - Automatic color adaptation when switching themes
+  - Self-documenting code with semantic color names
+  - Easy maintenance and extension
+  - Accessible contrast ratios maintained
+  - No more hardcoded gray-*, blue-*, or green-* classes
+  - Status colors that make semantic sense
+  - Surface colors that adapt to theme context
 -->
