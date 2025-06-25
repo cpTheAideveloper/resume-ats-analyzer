@@ -182,51 +182,55 @@ Themes automatically update all semantic colors:
 
 ```
 resume-ats-analyzer/
+├── app.vue                     ✅ Main app with NuxtLayout integration
 ├── assets/css/
-│   └── main.css                    ✅ TailwindCSS 4.0 theme configuration
+│   └── main.css                ✅ TailwindCSS 4.0 theme configuration
+├── layouts/
+│   └── default.vue             ✅ Responsive sidebar layout with mobile bottom sheet
 ├── components/
-│   ├── ui/                         # Core UI components
-│   │   ├── Button.vue             ✅ Enhanced with semantic theme colors
-│   │   ├── FileUpload.vue         ✅ Drag & drop with theme consistency
-│   │   ├── Card.vue               🆕 Notion-style cards with theme support
-│   │   ├── Badge.vue              🆕 Status indicators with semantic colors
-│   │   ├── IconButton.vue         🆕 Icon-only buttons
-│   │   ├── LoadingSpinner.vue     🆕 Loading states
-│   │   └── ProgressBar.vue        🆕 Progress indicators
-│   ├── layout/                    # Layout components
-│   │   ├── Header.vue             🚧 Navigation header with theme switcher
-│   │   ├── Hero.vue               ✅ Home page hero with semantic text
-│   │   └── Footer.vue             🆕 Simple footer with theme consistency
-│   ├── resume/                    # Resume-related components
-│   │   ├── ResumeUploader.vue     ✅ Enhanced with theme-aware animations
-│   │   ├── ResumePreview.vue      ✅ File info with semantic text hierarchy
-│   │   └── ResumeStatus.vue       🆕 Upload status with theme colors
-│   ├── analysis/                  # Analysis result components
-│   │   ├── ATSResults.vue         🆕 ATS-only results
-│   │   ├── JobComparisonResults.vue 🆕 Job comparison results
-│   │   ├── ScoreCard.vue          🆕 Score visualization with theme colors
-│   │   └── RecommendationsList.vue 🆕 Action items with semantic hierarchy
-│   └── shared/                    # Shared components
-│       ├── AnalysisTypeSelector.vue 🆕 Choose analysis type
-│       └── JobDescriptionInput.vue  ✅ Job posting input with theme support
-├── stores/                        # Pinia state management
-│   ├── resume.ts                  ✅ File & text management
-│   ├── analysis.ts                🆕 Analysis results & status
-│   ├── ui.ts                      🆕 UI state management
-│   └── theme.ts                   🆕 Theme switching and persistence
-├── pages/                         # Application pages
-│   ├── index.vue                  ✅ Enhanced home with semantic theme
-│   ├── ats-scanner.vue            🆕 ATS-only analysis
-│   ├── job-comparison.vue         🆕 Job comparison analysis
-│   └── results/                   # Results pages
-│       ├── ats/[id].vue          🆕 ATS analysis results
-│       └── comparison/[id].vue    🆕 Comparison results
-└── server/api/                    # Backend API routes
+│   ├── navbar/                 # Navigation components
+│   │   ├── NavbarSidebar.vue   ✅ Desktop right sidebar
+│   │   ├── NavbarBottomSheet.vue ✅ Mobile bottom sheet navigation
+│   │   ├── NavbarToggle.vue    ✅ Responsive floating toggle button
+│   │   ├── NavbarLink.vue      ✅ Navigation links with active states
+│   │   └── NavbarTheme.vue     ✅ Theme switcher with persistence
+│   ├── ui/                     # Core UI components
+│   │   ├── Button.vue          ✅ Enhanced with semantic theme colors
+│   │   ├── FileUpload.vue      ✅ Drag & drop with theme consistency
+│   │   ├── Card.vue            🆕 Notion-style cards with theme support
+│   │   ├── Badge.vue           🆕 Status indicators with semantic colors
+│   │   ├── IconButton.vue      🆕 Icon-only buttons
+│   │   ├── LoadingSpinner.vue  🆕 Loading states
+│   │   └── ProgressBar.vue     🆕 Progress indicators
+│   ├── resume/                 # Resume-related components
+│   │   ├── ResumeUploader.vue  ✅ Enhanced with theme-aware animations
+│   │   ├── ResumePreview.vue   ✅ File info with semantic text hierarchy
+│   │   └── ResumeStatus.vue    🆕 Upload status with theme colors
+│   ├── analysis/               # Analysis result components
+│   │   ├── AnalysisSection.vue  ✅ 
+│   │   ├── ATSEducation.vue     ✅ 
+│   │   ├── ATSResults.vue       ✅ 
+│   │   └── ScoreCard.vue        ✅  
+│   └── shared/                 # Shared components
+│       ├── AnalysisTypeSelector.vue 🚧 Choose analysis type
+│       └── JobDescriptionInput.vue  🚧 Job posting input with theme support
+├── stores/                     # Pinia state management
+│   ├── resume.ts               ✅ File & text management with debugging
+│   ├── analysis.ts             🚧 Analysis results & status
+│   └── ui.ts                   🚧 UI state management
+├── pages/                      # Application pages
+│   ├── index.vue               ✅ Enhanced home with semantic theme
+│   ├── ats-scanner.vue         🚧 ATS-only analysis page
+│   ├── job-comparison.vue      🚧 Job comparison analysis page
+│   └── results/                # Results pages
+│       ├── ats/[id].vue       🚧 ATS analysis results
+│       └── comparison/[id].vue 🚧 Comparison results
+└── server/api/                 # Backend API routes
     ├── analyze/
-    │   ├── ats.post.ts           🆕 ATS-only analysis
-    │   └── comparison.post.ts     🆕 Job comparison analysis
-    ├── upload.post.ts            ✅ File upload & extraction
-    └── health.get.ts             🆕 API health check
+    │   ├── ats.post.ts        🚧 ATS-only analysis endpoint
+    │   └── comparison.post.ts  🚧 Job comparison analysis endpoint
+    ├── upload.post.ts         ✅ File upload & extraction (fixed response format)
+    └── health.get.ts          🚧 API health check
 ```
 
 ## 🛠️ Development Phases
@@ -240,30 +244,215 @@ resume-ats-analyzer/
 ### Phase 5: Core Theme System & Navigation ✅ **COMPLETED**
 - [x] TailwindCSS 4.0 @theme configuration implementation
 - [x] Semantic color system with content-based naming
-- [x] Multi-theme support (light, dark, ocean, forest, sunset)
-- [x] Responsive navigation header with theme switcher
-- [x] Mobile menu with slide animations
+- [x] Multi-theme support (light, dark, ocean, forest, sunset, purple)
+- [x] **Responsive navigation system with modern UX patterns**
+- [x] **Desktop sidebar that slides from right and pushes content**
+- [x] **Mobile bottom sheet navigation for better touch experience**
+- [x] **Floating toggle button with responsive positioning**
+- [x] **Theme switcher with visual previews and persistence**
+- [x] **File upload system with semantic theme integration**
 
 ### Phase 6: Analysis Pages 🚧 **CURRENT PHASE**
-- [ ] Separate ATS Scanner page with theme-aware components
-- [ ] Job Comparison page with semantic text hierarchy
-- [ ] Analysis results display with theme consistency
-- [ ] Score visualization using theme color palette
-- [ ] Actionable recommendations with semantic styling
+Building the core analysis functionality with theme-aware components:
+
+#### **6.1: ATS Scanner Page** 🎯 **NEXT UP**
+- [x] Create `/ats-scanner` page with semantic theme styling
+- [x] Build analysis interface that shows current file status
+- [x] Implement loading states during AI analysis
+- [x] Design results display with score visualization
+- [x] Add actionable recommendations with priority levels
+
+#### **6.2: Job Comparison Page**
+- [ ] Create `/job-comparison` page with dual-input interface
+- [ ] Job description input component with validation
+- [ ] Comparison analysis with keyword highlighting
+- [ ] Skills gap analysis with visual indicators
+- [ ] Targeted improvement recommendations
+
+#### **6.3: Analysis Components**
+- [ ] `ScoreCard.vue` - Animated score visualization (0-100 scale)
+- [ ] `RecommendationsList.vue` - Priority-based action items
+- [ ] `ATSResults.vue` - Comprehensive ATS compatibility report
+- [ ] `JobComparisonResults.vue` - Side-by-side comparison interface
+- [ ] `AnalysisTypeSelector.vue` - Choice between analysis modes
+
+#### **6.4: AI Integration**
+- [ ] Implement Gemini AI analysis endpoints
+- [ ] Create research-based ATS analysis prompts
+- [ ] Build job comparison and keyword matching logic
+- [ ] Add error handling and retry mechanisms
+- [ ] Implement analysis result caching
 
 ### Phase 7: Results Visualization 🚧 **PLANNED**
-- [ ] Score cards with animated progress rings using theme colors
-- [ ] Interactive recommendations with semantic text hierarchy
+- [ ] Interactive score cards with animated progress rings
 - [ ] Before/after comparison views with theme support
-- [ ] Detailed analysis breakdown with consistent styling
-- [ ] Export functionality with theme-aware PDF generation
+- [ ] Detailed analysis breakdown with expandable sections
+- [ ] Export functionality (PDF reports with theme styling)
+- [ ] Results history and comparison features
 
 ### Phase 8: Polish & Optimization 🚧 **PLANNED**
-- [ ] Loading states and micro-animations with theme colors
 - [ ] Performance optimization for theme switching
 - [ ] Mobile responsiveness testing across all themes
-- [ ] Analytics and user tracking with theme preferences
+- [ ] Loading states and micro-animations
+- [ ] Analytics and user tracking
 - [ ] SEO optimization with theme meta tags
+
+## 🎯 **Navigation System Features** ✅ **COMPLETED**
+
+### **Desktop Experience**
+- **Right-side sidebar** that slides in smoothly
+- **Content area shifts left** when sidebar is open
+- **Floating toggle button** in top-right corner
+- **Theme switcher** with visual color previews
+- **File status display** when resume is uploaded
+- **Quick navigation** to all analysis pages
+
+### **Mobile Experience** 
+- **Bottom sheet navigation** for natural touch interaction
+- **Slides up from bottom** with handle bar indicator
+- **Floating toggle button** in bottom-right corner (thumb-friendly)
+- **Full-width layout** optimized for mobile screens
+- **Scrollable content** that doesn't cover entire screen (85% max height)
+- **Same functionality** as desktop but mobile-optimized
+
+### **Universal Features**
+- **Semantic theme integration** - all colors adapt to theme changes
+- **Keyboard shortcuts** - Escape key closes navigation
+- **Route-aware navigation** - automatically closes on mobile after navigation
+- **File management** - clear/replace file directly from navigation
+- **External link support** - documentation and issue reporting
+- **Theme persistence** - remembers user's theme preference
+
+## 🎯 **Phase 6 Implementation Strategy**
+
+### **6.1: ATS Scanner Page Development**
+
+#### **Page Structure:**
+```vue
+<!-- pages/ats-scanner.vue -->
+<template>
+  <div class="container-section space-component">
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-hero text-content-base">ATS Scanner</h1>
+      <p class="text-subtitle text-content-secondary">
+        Analyze your resume for ATS compatibility
+      </p>
+    </div>
+
+    <!-- File Status or Upload Prompt -->
+    <div v-if="!resumeStore.isFileUploaded">
+      <UploadPrompt />
+    </div>
+
+    <!-- Analysis Interface -->
+    <div v-else-if="!analysisStore.isAnalyzing && !analysisStore.hasResults">
+      <AnalysisInterface />
+    </div>
+
+    <!-- Loading State -->
+    <div v-else-if="analysisStore.isAnalyzing">
+      <AnalysisLoading />
+    </div>
+
+    <!-- Results Display -->
+    <div v-else>
+      <ATSResults :results="analysisStore.atsResults" />
+    </div>
+  </div>
+</template>
+```
+
+#### **Components to Build:**
+1. **`UploadPrompt.vue`** - Prompts user to upload resume with link back to home
+2. **`AnalysisInterface.vue`** - Shows file info and "Start Analysis" button
+3. **`AnalysisLoading.vue`** - Loading animation with progress indicators
+4. **`ATSResults.vue`** - Comprehensive results display with scores and recommendations
+
+#### **Store Integration:**
+```typescript
+// stores/analysis.ts - New store for analysis state
+export const useAnalysisStore = defineStore('analysis', () => {
+  const isAnalyzing = ref(false)
+  const atsResults = ref(null)
+  const hasResults = computed(() => atsResults.value !== null)
+  
+  const analyzeATS = async (resumeText: string) => {
+    isAnalyzing.value = true
+    // Call Gemini AI API
+    // Store results
+    isAnalyzing.value = false
+  }
+})
+```
+
+### **6.2: Design System for Analysis Components**
+
+#### **Score Visualization:**
+```css
+/* Custom utilities for analysis components */
+@utility score-ring {
+  /* Animated circular progress ring for scores */
+}
+
+@utility progress-gradient {
+  /* Gradient background for progress bars */
+}
+```
+
+#### **Semantic Color Usage for Analysis:**
+- `text-content-base` - Main headings and scores
+- `text-content-secondary` - Descriptions and explanations  
+- `text-content-tertiary` - Labels and metadata
+- `bg-success-light` + `text-success-dark` - Good scores (80-100)
+- `bg-warning-light` + `text-warning-dark` - Medium scores (60-79)
+- `bg-error-light` + `text-error-dark` - Poor scores (0-59)
+
+### **6.3: AI Integration Approach**
+
+#### **Research-Based Prompts:**
+```typescript
+// utils/gemini/atsPrompts.ts
+export const createATSAnalysisPrompt = (resumeText: string) => `
+Analyze this resume for ATS compatibility based on modern ATS research:
+
+${resumeText}
+
+Provide analysis in this JSON format:
+{
+  "score": 85,
+  "issues": [...],
+  "recommendations": [...],
+  "formatting": {...},
+  "keywords": {...}
+}
+`
+```
+
+## 📝 **Development Status Update**
+
+**Phase 5 Complete! ✅**
+- ✅ TailwindCSS 4.0 theme system fully implemented
+- ✅ Semantic color naming with content-based hierarchy  
+- ✅ Multi-theme support with automatic color adaptation
+- ✅ **Complete navigation system with desktop sidebar and mobile bottom sheet**
+- ✅ **Responsive floating toggle button with thumb-friendly positioning**
+- ✅ **Theme switcher with visual previews and localStorage persistence**
+- ✅ **File upload system fully integrated with semantic theme colors**
+- ✅ **API response format standardized and documented**
+
+**Starting Phase 6: Analysis Pages 🚧**
+- 🎯 **Next Sprint**: Build ATS Scanner page with analysis interface
+- 🎯 **Priority**: Create analysis store and loading states
+- 🎯 **Focus**: Theme-aware score visualization components
+- 🎯 **Goal**: Complete ATS analysis flow from upload to results
+
+**Key Phase 6 Objectives:**
+- **Semantic Analysis UI**: All analysis components use content-based color utilities
+- **Theme-Aware Visualizations**: Score cards and charts adapt to theme automatically
+- **Responsive Analysis Interface**: Optimized for both desktop sidebar and mobile bottom sheet
+- **AI Integration**: Gemini-powered analysis with research-based prompts
+- **Performance**: Smooth interactions with proper loading states
 
 ## 🎯 Theme Implementation Examples
 
@@ -642,3 +831,170 @@ store.debugState() // Shows current store state
 - **Performance**: Smooth theme switching without layout shifts
 
 This enhanced theme system provides a professional, consistent design that adapts beautifully across multiple themes while maintaining excellent accessibility and user experience.
+
+
+
+
+Based on your working version, here's the structure we should implement for the ATS results in Phase 6:
+🎯 ATS Results Structure Plan
+📂 Component Architecture
+components/analysis/
+├── ATSResults.vue              # Main results container
+├── ScoreCard.vue              # Individual score visualization
+├── ScoreRing.vue              # Circular progress rings
+├── StrengthsList.vue          # Strengths display
+├── MissingElementsList.vue    # Missing elements display  
+├── RecommendationsList.vue    # Action items with priorities
+├── KeywordAnalysis.vue        # Keyword matching breakdown
+├── FormatIssuesList.vue       # ATS format problems
+├── IndustryInsights.vue       # Industry-specific advice
+└── ATSEducation.vue           # Educational content about ATS
+📱 Page Structure
+pages/
+├── ats-scanner.vue            # Main ATS analysis page
+└── results/
+    └── ats/
+        └── [id].vue           # Individual analysis results (future)
+🏪 Store Structure
+stores/
+├── analysis.ts                # Analysis state management
+│   ├── State: results, loading, errors
+│   ├── Actions: analyzeATS(), clearResults()
+│   └── Getters: hasResults, isAnalyzing
+└── resume.ts                  # (existing) File management
+🎨 Design System Components
+components/ui/
+├── ProgressRing.vue          # Reusable circular progress
+├── ScoreLabel.vue            # Score text with color coding
+├── KeywordTag.vue            # Individual keyword chips
+├── RecommendationCard.vue    # Action item cards
+└── AnalysisSection.vue       # Consistent section wrapper
+📊 Data Flow Structure
+1. User Flow:
+   ├── Upload resume (existing)
+   ├── Click "Analyze" button
+   ├── Navigate to /ats-scanner
+   ├── Show loading state
+   ├── Display results
+   └── Export/share options
+
+2. Analysis States:
+   ├── No file uploaded → Upload prompt
+   ├── File ready → Analysis interface  
+   ├── Analyzing → Loading animation
+   ├── Results ready → Full results display
+   └── Error → Error handling with retry
+🎯 Component Breakdown
+ATSResults.vue (Main Container)
+
+Executive summary with 3 score rings
+Grid layout for detailed sections
+Responsive design (mobile stacked, desktop grid)
+Export and action buttons
+
+ScoreCard.vue (Individual Scores)
+
+Animated circular progress ring
+Score number with color coding
+Label and description
+Threshold-based coloring (80+ green, 60+ yellow, <60 red)
+
+KeywordAnalysis.vue (Keyword Breakdown)
+
+Matched keywords (green tags)
+Missing keywords (red tags)
+Match percentage visualization
+Keyword density analysis
+
+RecommendationsList.vue (Action Items)
+
+Numbered priority list
+Expandable detail cards
+Implementation difficulty indicators
+Before/after examples
+
+ATSEducation.vue (Educational Content)
+
+Modern ATS facts
+Myth-busting information
+Best practices tips
+Score interpretation guide
+
+🎨 Semantic Theme Integration
+Color Usage Pattern:
+Score Ranges:
+├── 80-100: bg-success-light + text-success-dark
+├── 60-79:  bg-warning-light + text-warning-dark  
+├── 40-59:  bg-error-light + text-error-dark
+└── 0-39:   bg-error-light + text-error-dark
+
+Text Hierarchy:
+├── Headings: text-content-base
+├── Descriptions: text-content-secondary
+├── Labels: text-content-tertiary
+└── Metadata: text-content-tertiary/70
+
+Interactive Elements:
+├── Buttons: btn-primary, btn-secondary
+├── Cards: card-base + card-padding
+└── Tags: semantic color backgrounds
+📱 Responsive Behavior
+Desktop Layout:
+├── Sidebar open: Results in main content area
+├── Three-column score summary
+├── Two-column detailed analysis grid
+└── Full-width education section
+Mobile Layout:
+├── Bottom sheet navigation
+├── Single-column stacked layout
+├── Larger touch targets
+└── Swipeable sections (future enhancement)
+🔄 State Management Pattern
+Analysis Store:
+typescriptinterface AnalysisState {
+  isAnalyzing: boolean
+  atsResults: ATSResults | null
+  analysisError: string | null
+  analysisId: string | null
+}
+
+interface ATSResults {
+  atsScore: number
+  jobMatchScore: number
+  keywordAnalysis: KeywordAnalysis
+  strengths: string[]
+  missing: string[]
+  recommendations: Recommendation[]
+  formatIssues: string[]
+  industrySpecific: string[]
+}
+🎬 Animation Strategy
+Progressive Disclosure:
+1. Score rings animate in sequence (staggered)
+2. Sections fade in as user scrolls
+3. Keyword tags animate in with delay
+4. Recommendations expand on interaction
+5. Smooth transitions between states
+🎯 Implementation Priority
+Phase 6.1 (Core Results):
+
+ATSResults.vue main container
+ScoreCard.vue with animated rings
+Basic recommendations list
+Keyword analysis display
+
+Phase 6.2 (Enhanced Features):
+
+Detailed formatting issues
+Industry-specific insights
+Educational content
+Export functionality
+
+Phase 6.3 (Polish):
+
+Advanced animations
+Interactive elements
+Mobile optimizations
+Performance improvements
+
+This structure maintains the visual appeal of your working version while integrating with our semantic theme system and responsive navigation layout. Would you like to start implementing any specific component from this structure?ReintentarClaude puede cometer errores. Verifique las respuestas.

@@ -1,7 +1,7 @@
 <!-- 
   📍 COMPONENT LOCATION: pages/index.vue
-  🎯 PURPOSE: Notion-style full-screen hero with semantic theme integration
-  🔧 PHASE: Phase 5 - Core Theme System & Navigation
+  🎯 PURPOSE: Notion-style full-screen hero with semantic theme integration + Auto-start logic
+  🔧 PHASE: Phase 6 - Auto-start ATS analysis from homepage
 -->
 
 <template>
@@ -36,7 +36,7 @@
               
               <NuxtLink
                 v-else
-                to="/ats-scanner"
+                to="/ats-scanner?autoStart=true"
                 class="btn-primary"
               >
                 <Icon name="heroicons:magnifying-glass" class="w-7 h-7 mr-3" />
@@ -76,7 +76,7 @@
               </div>
               
               <NuxtLink
-                to="/ats-scanner"
+                to="/ats-scanner?autoStart=true"
                 class="btn-primary w-full justify-center"
               >
                 <Icon name="heroicons:magnifying-glass" class="w-6 h-6 mr-3" />
@@ -123,6 +123,7 @@
     
     📋 PURPOSE:
     - Clean home page with semantic theme integration
+    - Auto-start ATS analysis when user clicks "Analyze Resume"
     - Showcases enhanced upload components with consistent styling
     - Notion-inspired typography using semantic utility classes
     - Automatic theme adaptation across all color variants
@@ -136,7 +137,14 @@
     - stores/resume.ts: Upload status and file management
     - components/resume/ResumeUploader.vue: Semantic theme-aware upload interface
     - components/resume/ResumePreview.vue: Theme-consistent file display
-    - /ats-scanner and /job-comparison: Analysis pages
+    - /ats-scanner?autoStart=true: Analysis page with auto-start parameter
+    - /job-comparison: Job comparison analysis page
+    
+    🎯 AUTO-START LOGIC:
+    - Homepage buttons now include ?autoStart=true parameter
+    - ATS Scanner page detects this parameter and auto-starts analysis
+    - Improves user experience by eliminating extra click
+    - Maintains existing manual analysis option for direct navigation
     
     🎨 SEMANTIC THEME COLORS USED:
     
@@ -208,13 +216,23 @@
     - Perform theme switching (handled by layout/header)
     - Store application state (uses store for data access)
     - Use any hardcoded color classes (all colors are semantic)
+    - Perform the actual analysis (delegated to ATS Scanner page)
     
     📋 TYPICAL USER FLOW:
     1. User lands on semantic theme-aware homepage
     2. Reads hero message with consistent typography hierarchy
     3. Uploads resume using theme-integrated uploader component
     4. Sees analysis options with semantic button styling
-    5. All interactions maintain theme consistency automatically
+    5. Clicks "Analyze Resume" → navigates to /ats-scanner?autoStart=true
+    6. ATS Scanner automatically starts analysis without additional clicks
+    7. All interactions maintain theme consistency automatically
+    
+    🎯 AUTO-START BENEFITS:
+    - Smoother user experience with fewer clicks
+    - Clear intent when coming from homepage
+    - Maintains existing manual flow for bookmarks/direct navigation
+    - Progressive enhancement approach
+    - Consistent with modern SPA patterns
     
     🎯 SEMANTIC COLOR BENEFITS:
     - Consistent visual hierarchy across all themes
